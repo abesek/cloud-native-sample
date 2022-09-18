@@ -5,8 +5,12 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
+
+@Table("products")
 public class Product {
-    private String sku;
+    private @Id String sku;
     private List<Batch> batches;
     private int versionNumber;
 
@@ -30,10 +34,16 @@ public class Product {
                 .findFirst();
         try {
             batch.get().allocate(line);
-            this.versionNumber += 1;
+            versionNumber = versionNumber + 1;
             return batch.get().getReference();
         } catch (NoSuchElementException e) {
             throw new OutOfStock(String.format("Out of stock for sku %s", line.getSku()));
+        }
+    }
+
+    public void addBatch(Batch batch) {
+        if (batch != null) {
+            this.batches.add(batch);
         }
     }
     

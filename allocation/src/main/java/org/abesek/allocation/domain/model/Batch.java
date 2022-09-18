@@ -5,12 +5,17 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+@Table("batches")
 @ToString(includeFieldNames=true)
 public class Batch implements Comparable<Batch> {
+    @Getter @Setter private @Id int id;
     @Getter @Setter private String reference;
     @Getter @Setter private String sku;
     @Getter @Setter private Optional<LocalDateTime> eta;
