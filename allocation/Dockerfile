@@ -1,4 +1,4 @@
-FROM openjdk:11-jdk-alpine as build
+FROM eclipse-temurin:11-jdk-alpine as build
 
 RUN addgroup -S spring && adduser -S spring -G spring
 USER spring
@@ -14,7 +14,7 @@ RUN ./mvnw install -DskipTests
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
 
-FROM openjdk:11-jre-alpine
+FROM eclipse-temurin:11-jre-alpine
 
 ARG DEPENDENCY=/workspace/app/target/dependency
 
